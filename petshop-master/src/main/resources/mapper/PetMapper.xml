@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.petshop.mapper.PetMapper">
+
+    <!--查询所有用户信息，返回一个List<Bean>-->
+    <select id="queryPets" resultType="com.example.petshop.bean.PetBean">
+        SELECT * FROM pet
+        <where>
+            <if test = "id != null and id!=''">
+            id = #{id}
+        </if>
+            <if test = "kind != null and kind!=''">
+            and kind = #{kind}
+        </if>
+            <if test = "petname != null and petname!=''">
+                and petname = #{petname}
+        </if>
+        </where>
+        order by id;
+    </select>
+
+    <insert id="addPet" parameterType="com.example.petshop.bean.PetBean">
+        INSERT InTO
+            pet(petname,story,price,kind,status)
+        values
+            (#{petname},#{story},#{price},#{kind},#{status});
+    </insert>
+
+
+    <delete id="dropPet" parameterType="String">
+        DELETE FROM pet
+        WHERE id = #{id};
+    </delete>
+
+
+    <update id="modifyPet" parameterType="com.example.petshop.bean.PetBean">
+        UPDATE pet
+        SET
+        <if test = "price != null and price!=''">
+            price = #{price}
+        </if>
+        <if test = "petname != null and petname!=''">
+            and petname = #{petname}
+        </if>
+        <if test = "story != null and story!=''">
+            and story = #{story}
+        </if>
+        <if test = "kind != null and kind!=''">
+            and kind = #{kind}
+        </if>
+        <if test = "status != null and status!=''">
+            and status = #{status}
+        </if>
+        WHERE id = #{id};
+    </update>
+
+    <select id="findPetById" resultType="com.example.petshop.bean.PetBean">
+        SELECT * FROM pet where id= #{id};
+    </select>
+
+</mapper>

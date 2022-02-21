@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.petshop.mapper.ViewMapper">
+
+    <!--验证用户账号和密码-->
+    <select id="getViews" parameterType="String" resultType="com.example.petshop.bean.ViewBean">
+        SELECT * FROM viewrecords
+        WHERE userid = #{userid} order by views desc;
+    </select>
+
+    <update id="viewPet" parameterType="com.example.petshop.bean.ViewBean">
+        UPDATE viewrecords set
+        views = views+1
+        WHERE userid = #{userid} and petid = #{petid};
+    </update>
+
+    <select id="findViewsByWhere" resultType="com.example.petshop.bean.ViewBean">
+        SELECT * FROM viewrecords
+        <where>
+            <if test = "viewid != null and viewid!=''">
+                viewid = #{viewid}
+            </if>
+            <if test = "userid != null and userid!=''">
+                and userid = #{userid}
+            </if>
+            <if test = "petid != null and petid!=''">
+                and petid = #{petid}
+            </if>
+        </where>
+        order by views;
+    </select>
+
+    <insert id="addViews" parameterType="com.example.petshop.bean.ViewBean">
+        INSERT InTO
+            viewrecords(viewid,userid,petid,views)
+        values
+            (#{viewid},#{userid},#{petid},#{views});
+    </insert>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.petshop.mapper.AccountMapper">
+
+    <!--验证用户账号和密码-->
+    <select id="getMyAccount" parameterType="String" resultType="com.example.petshop.bean.AccountBean">
+        SELECT * FROM account
+        WHERE id = #{id};
+    </select>
+
+    <update id="payForPet" parameterType="com.example.petshop.bean.AccountBean">
+        UPDATE account set
+        money = #{money}
+        WHERE id = #{id};
+    </update>
+
+
+</mapper>

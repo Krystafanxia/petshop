@@ -1,0 +1,37 @@
+package com.example.petshop.bean;
+
+public class FileBean {
+    //pet
+    private int id;
+    private String fileid;
+    private String filename;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFileid() {
+        return fileid;
+    }
+
+    public void setFileid(String fileid) {
+        this.fileid = fileid;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+
+
+
+
+
+}
