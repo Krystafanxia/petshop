@@ -5,18 +5,11 @@ import com.example.petshop.service.FileService;
 import com.example.petshop.utils.Result;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import org.springframework.core.io.UrlResource;
-import org.springframework.core.io.Resource;
-import sun.nio.ch.IOUtil;
-
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.nio.file.Paths;
 
 @RestController
 public class FileController extends HttpServlet {

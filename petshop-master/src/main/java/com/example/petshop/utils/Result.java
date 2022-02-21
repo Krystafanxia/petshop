@@ -36,7 +36,7 @@ public class Result {
     Result(String message, Object data, String code) {
         this.message = message;
         this.data = data;
-        this.code = code == null ? STATUS_SUCCESS : code;
+        this.code = (code == null || code == "") ? STATUS_SUCCESS : code;
 
     }
 

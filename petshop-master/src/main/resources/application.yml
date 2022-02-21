@@ -2,9 +2,9 @@
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3306/petshop?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC #url
-    username: root
-    password: test123
+    url: jdbc:mysql://115.159.51.86:3306/E39A?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC #url
+    username: share
+    password: Share1234#
     driver-class-name: com.mysql.jdbc.Driver
 
 mybatis:
