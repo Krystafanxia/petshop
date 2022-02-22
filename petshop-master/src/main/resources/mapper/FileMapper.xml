@@ -3,19 +3,31 @@
 <mapper namespace="com.example.petshop.mapper.FileMapper">
 
     <select id="getFile" resultType="com.example.petshop.bean.FileBean">
-        SELECT * FROM vedio
-        WHERE id = #{id};
+        SELECT * FROM file
+        WHERE fileid = #{fileid};
+    </select>
+
+    <select id="findFile" resultType="com.example.petshop.bean.FileBean">
+        SELECT * FROM file
+        <where>
+            <if test = "id != null and id!=''">
+                id = #{id}
+            </if>
+            <if test = "filetype != null and filetype!=''">
+                and filetype = #{filetype}
+            </if>
+        </where>
     </select>
 
     <insert id="insertFile" parameterType="com.example.petshop.bean.FileBean">
         INSERT InTO
-            vedio(id,fileid,filename)
+            file(id,fileid,filename,filetype)
         values
-            (#{id},#{fileid},#{filename});
+            (#{id},#{fileid},#{filename},#{filetype});
     </insert>
 
     <delete id="deleteFile" parameterType="com.example.petshop.bean.FileBean">
-        DELETE FROM vedio
-        WHERE id = #{id};
+        DELETE FROM file
+        WHERE fileid = #{fileid};
     </delete>
 </mapper>

@@ -6,6 +6,7 @@ import com.example.petshop.service.FileService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,12 +33,16 @@ public class FileServiceImp implements FileService {
     @Override
     public int insertFile(FileBean file) {
         String id= UUID.randomUUID().toString().replace("-","");
-        FileBean oldFile=fileMapper.getFile(file);
-        if(oldFile!=null){
-            fileMapper.deleteFile(oldFile);
-        }
+//        FileBean oldFile=fileMapper.getFile(file);
+//        if(oldFile!=null){
+//            fileMapper.deleteFile(oldFile);
+//        }
         file.setFileid(id);
         return fileMapper.insertFile(file);
     }
 
+    @Override
+    public List<FileBean> findFile(FileBean file) {
+        return fileMapper.findFile(file);
+    }
 }

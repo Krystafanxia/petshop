@@ -5,6 +5,7 @@ public class FileBean {
     private int id;
     private String fileid;
     private String filename;
+    private String filetype;
     public int getId() {
         return id;
     }
@@ -29,9 +30,11 @@ public class FileBean {
         this.filename = filename;
     }
 
+    public String getFiletype() {
+        return filetype;
+    }
 
-
-
-
-
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
+    }
 }
