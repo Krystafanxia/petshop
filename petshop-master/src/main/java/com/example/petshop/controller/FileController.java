@@ -5,6 +5,7 @@ import com.example.petshop.service.FileService;
 import com.example.petshop.utils.Result;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.UUID;
 
 @RestController
-public class FileController extends HttpServlet {
+public class FileController extends BaseController {
 
-    public static String FILEPATH="D:\\file";
+    public static String FILEPATH="uploads";
     @Autowired
     FileService fileService;
 
@@ -34,21 +37,21 @@ public class FileController extends HttpServlet {
      * @return
      */
     @RequestMapping("/upload")
-    public Result upload(@RequestParam MultipartFile file, String id){
+    public Result upload(@RequestParam MultipartFile file){
         if(file.isEmpty()){
             return Result.error("The file is null");
         }
         try{
-            String fileName= file.getOriginalFilename();
-            String destFileName=FILEPATH+File.separator+fileName;
+            String fileName= UUID.randomUUID() + file.getOriginalFilename();
+            String destFileName = getFilePath() + File.separator + fileName;
             File destFile=new File(destFileName);
             file.transferTo(destFile);
             //insert vedio into database
             FileBean vedio=new FileBean();
-            vedio.setId(Integer.parseInt(id));
+            vedio.setId(getLoginUser().getId());
             vedio.setFilename(fileName);
             fileService.insertFile(vedio);
-            return Result.success(destFileName,"success");
+            return Result.success(fileName,"success");
         } catch (IOException e) {
             e.printStackTrace();
             return Result.error("upload fail");
@@ -59,7 +62,7 @@ public class FileController extends HttpServlet {
     public Result download (HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException {
         request.setCharacterEncoding("UTF-8");
         String fileName=request.getParameter("fileName");
-        String path=FILEPATH+File.separator+fileName;
+        String path = getFilePath() + File.separator +  fileName;
         File file=new File(path);
         FileInputStream in=new FileInputStream(file);
         String type=request.getServletContext().getMimeType(fileName);
@@ -84,5 +87,19 @@ public class FileController extends HttpServlet {
         e.printStackTrace();
         return Result.error("file");
         }
+    }
+
+    String getFilePath() {
+        String classPath = "/";
+        try {
+            classPath = ResourceUtils.getURL("classpath:").getPath();
+        } catch (FileNotFoundException e) {
+        }
+        classPath += "static" + File.separator + "static" + File.separator + FILEPATH;
+        File file = new File(classPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return classPath;
     }
 }

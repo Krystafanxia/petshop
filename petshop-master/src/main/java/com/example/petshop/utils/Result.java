@@ -60,6 +60,6 @@ public class Result {
         return Result.error(message, data, "");
     }
     public static Result error(String message, Object data, String code) {
-        return new Result(message, data, code == null ? STATUS_ERROR : code);
+        return new Result(message, data, (code == null || code == "") ? STATUS_ERROR : code);
     }
 }
