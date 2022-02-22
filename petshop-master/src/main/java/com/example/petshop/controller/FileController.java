@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class FileController extends HttpServlet {
@@ -37,7 +39,7 @@ public class FileController extends HttpServlet {
      * @return
      */
     @RequestMapping("/upload")
-    public Result upload(@RequestParam MultipartFile file, String id){
+    public Result upload(@RequestParam MultipartFile file, String id,String type){
         if(file.isEmpty()){
             return Result.error("The file is null");
         }
