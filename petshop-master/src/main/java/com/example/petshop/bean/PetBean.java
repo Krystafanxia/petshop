@@ -7,7 +7,8 @@ public class PetBean {
     private String status;
     private double price;
     private String kind;
-
+    private int age;
+    private String color;
     public int getId() {
         return id;
     }
@@ -54,5 +55,21 @@ public class PetBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -24,7 +24,7 @@ import java.net.URLEncoder;
 import java.util.UUID;
 
 @RestController
-public class FileController extends BaseController {
+public class FileController extends HttpServlet {
 
     public static String FILEPATH="uploads";
     @Autowired
@@ -37,7 +37,7 @@ public class FileController extends BaseController {
      * @return
      */
     @RequestMapping("/upload")
-    public Result upload(@RequestParam MultipartFile file){
+    public Result upload(@RequestParam MultipartFile file, String id){
         if(file.isEmpty()){
             return Result.error("The file is null");
         }
@@ -47,11 +47,12 @@ public class FileController extends BaseController {
             File destFile=new File(destFileName);
             file.transferTo(destFile);
             //insert vedio into database
-            FileBean vedio=new FileBean();
-            vedio.setId(getLoginUser().getId());
-            vedio.setFilename(fileName);
-            fileService.insertFile(vedio);
-            return Result.success(fileName,"success");
+            FileBean attachment=new FileBean();
+            attachment.setId(Integer.parseInt(id));
+            attachment.setFilename(fileName);
+            attachment.setFiletype(type);
+            fileService.insertFile(attachment);
+            return Result.success(destFileName,"success");
         } catch (IOException e) {
             e.printStackTrace();
             return Result.error("upload fail");
@@ -76,16 +77,29 @@ public class FileController extends BaseController {
         return Result.success(fileName,"success");
     }
 
-    @RequestMapping("/getPetFile")
-    public Result getPetFile(@RequestParam String id){
+    @RequestMapping("/getPetFiles")
+    public Result getPetFile(@RequestParam String id,String type){
         try{
-        FileBean file=new FileBean();
-        file.setId(Integer.parseInt(id));
-        file=fileService.getFile(file);
-        return Result.success(file,"success");
+            List<FileBean> files=new ArrayList<>();
+            FileBean file=new FileBean();
+            file.setId(Integer.parseInt(id));
+            file.setFiletype(type);
+            files=fileService.findFile(file);
+            return Result.success(files,"success");
     }catch (Exception e){
         e.printStackTrace();
         return Result.error("file");
+        }
+    }
+
+    @RequestMapping("/delPetFile")
+    public Result getPetFile(@RequestParam String fileid){
+        try{
+            int flag=fileService.deleteFile(fileid);
+            return Result.success("success");
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error("file");
         }
     }
 

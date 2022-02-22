@@ -21,9 +21,9 @@
 
     <insert id="addPet" parameterType="com.example.petshop.bean.PetBean">
         INSERT InTO
-            pet(petname,story,price,kind,status)
+            pet(petname,story,price,kind,status,age,color)
         values
-            (#{petname},#{story},#{price},#{kind},#{status});
+            (#{petname},#{story},#{price},#{kind},#{status},#{age},#{color});
     </insert>
 
 
@@ -50,6 +50,12 @@
         </if>
         <if test = "status != null and status!=''">
             and status = #{status}
+        </if>
+        <if test = "age != null and age!=''">
+            and age = #{age}
+        </if>
+        <if test = "color != null and color!=''">
+            and color = #{color}
         </if>
         WHERE id = #{id};
     </update>
