@@ -13,4 +13,6 @@ public interface FileMapper {
     int deleteFile(String fileid);
 
     List<FileBean> findFile(FileBean file);
+
+    List<String> getPics(String id);
 }

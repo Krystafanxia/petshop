@@ -7,6 +7,12 @@
         WHERE fileid = #{fileid};
     </select>
 
+    <select id="getPics" resultType="String">
+        SELECT fileid FROM file
+        WHERE id = #{id};
+    </select>
+
+
     <select id="findFile" resultType="com.example.petshop.bean.FileBean">
         SELECT * FROM file
         <where>

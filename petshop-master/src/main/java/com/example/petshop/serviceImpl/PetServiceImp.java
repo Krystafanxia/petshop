@@ -1,6 +1,7 @@
 package com.example.petshop.serviceImpl;
 
 import com.example.petshop.bean.PetBean;
+import com.example.petshop.bean.PetPicBean;
 import com.example.petshop.mapper.PetMapper;
 import com.example.petshop.service.PetService;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class PetServiceImp implements PetService {
     public List<PetBean> queryPets(PetBean pet) {
         return petMapper.queryPets(pet);
     }
+
 
     @Override
     public int addPet(PetBean pet) {

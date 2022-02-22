@@ -19,6 +19,7 @@
         order by id;
     </select>
 
+
     <insert id="addPet" parameterType="com.example.petshop.bean.PetBean">
         INSERT InTO
             pet(petname,story,price,kind,status,age,color)

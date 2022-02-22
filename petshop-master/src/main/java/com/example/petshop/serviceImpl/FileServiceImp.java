@@ -50,4 +50,9 @@ public class FileServiceImp implements FileService {
     public int deleteFile(String fileid) {
         return fileMapper.deleteFile(fileid);
     }
+
+    @Override
+    public List<String> getPics(String id) {
+        return fileMapper.getPics(id);
+    }
 }

@@ -1,10 +1,13 @@
 package com.example.petshop.controller;
 
 import com.example.petshop.bean.PetBean;
+import com.example.petshop.bean.PetPicBean;
 import com.example.petshop.bean.ViewBean;
+import com.example.petshop.service.FileService;
 import com.example.petshop.service.PetService;
 import com.example.petshop.service.ViewService;
 import com.example.petshop.utils.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,9 @@ public class ModifyPetController{
     @Autowired
     ViewService viewService;
 
+    @Autowired
+    FileService fileService;
+
     /**
      *
      * @param pet
@@ -34,7 +40,15 @@ public class ModifyPetController{
     public Result queryPets(@RequestBody PetBean pet){
         try {
             List<PetBean> petList = petService.queryPets(pet);
-            return Result.success(petList,"success");
+            List<PetPicBean> petPicList=new ArrayList<>();
+            for(PetBean petNew:petList) {
+                PetPicBean petpic=new PetPicBean();
+                BeanUtils.copyProperties(petNew,petpic);
+                List<String> pics=fileService.getPics(String.valueOf(petpic.getId()));
+                petpic.setPics(pics);
+                petPicList.add(petpic);
+            }
+            return Result.success(petPicList,"success");
         }catch (Exception e){
             e.printStackTrace();
             return Result.error("fail");

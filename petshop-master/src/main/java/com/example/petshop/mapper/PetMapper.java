@@ -1,6 +1,7 @@
 package com.example.petshop.mapper;
 
 import com.example.petshop.bean.PetBean;
+import com.example.petshop.bean.PetPicBean;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public interface PetMapper {
 
     //queryPets
     List<PetBean> queryPets(PetBean pet);
+
 
     //addPet
     int addPet(PetBean pet);

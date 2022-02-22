@@ -14,4 +14,6 @@ public interface FileService {
 
     int deleteFile(String fileid);
 
+    List<String> getPics(String id);
+
 }
