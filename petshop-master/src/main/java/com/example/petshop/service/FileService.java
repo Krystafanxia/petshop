@@ -12,4 +12,6 @@ public interface FileService {
 
     List<FileBean> findFile(FileBean file);
 
+    int deleteFile(String fileid);
+
 }

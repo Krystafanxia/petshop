@@ -10,7 +10,7 @@ public interface FileMapper {
 
     int insertFile(FileBean file);
 
-    int deleteFile(FileBean file);
+    int deleteFile(String fileid);
 
     List<FileBean> findFile(FileBean file);
 }

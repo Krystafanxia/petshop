@@ -45,4 +45,9 @@ public class FileServiceImp implements FileService {
     public List<FileBean> findFile(FileBean file) {
         return fileMapper.findFile(file);
     }
+
+    @Override
+    public int deleteFile(String fileid) {
+        return fileMapper.deleteFile(fileid);
+    }
 }

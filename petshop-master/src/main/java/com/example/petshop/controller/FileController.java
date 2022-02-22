@@ -90,4 +90,15 @@ public class FileController extends HttpServlet {
         return Result.error("file");
         }
     }
+
+    @RequestMapping("/delPetFile")
+    public Result getPetFile(@RequestParam String fileid){
+        try{
+            int flag=fileService.deleteFile(fileid);
+            return Result.success("success");
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error("file");
+        }
+    }
 }
