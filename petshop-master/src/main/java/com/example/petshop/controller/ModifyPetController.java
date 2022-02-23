@@ -1,12 +1,10 @@
 package com.example.petshop.controller;
 
-import com.example.petshop.bean.FileBean;
-import com.example.petshop.bean.PetBean;
-import com.example.petshop.bean.PetPicBean;
-import com.example.petshop.bean.ViewBean;
+import com.example.petshop.bean.*;
 import com.example.petshop.service.FileService;
 import com.example.petshop.service.PetService;
 import com.example.petshop.service.ViewService;
+import com.example.petshop.utils.Const;
 import com.example.petshop.utils.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class ModifyPetController{
+public class ModifyPetController extends BaseController {
 
     @Autowired
     PetService petService;
@@ -40,6 +38,10 @@ public class ModifyPetController{
     @RequestMapping("/queryPets")
     public Result queryPets(@RequestBody PetBean pet){
         try {
+            UserBean loginUser = getLoginUser();
+            if (loginUser != null && loginUser.getRole() != Const.UserType.ADMIN.getKey()) {
+                pet.setUserid(loginUser.getId());
+            }
             List<PetBean> petList = petService.queryPets(pet);
             List<PetPicBean> petPicList=new ArrayList<>();
             for(PetBean petNew:petList) {
@@ -68,6 +70,7 @@ public class ModifyPetController{
     @ResponseBody
     public Result addUser(@RequestBody PetBean pet){
         try {
+            pet.setUserid(getLoginUser().getId());
             petService.addPet(pet);
             Map<String,Object> map = new HashMap<String,Object>();
             return Result.success(pet.getId(),"success");

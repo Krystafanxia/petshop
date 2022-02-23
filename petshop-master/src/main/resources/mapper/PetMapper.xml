@@ -25,9 +25,9 @@
             select LAST_INSERT_ID()
         </selectKey>
         INSERT InTO
-            pet(petname,story,price,kind,status,age,color)
+            pet(petname,story,price,kind,status,age,color,userid)
         values
-            (#{petname},#{story},#{price},#{kind},#{status},#{age},#{color});
+            (#{petname},#{story},#{price},#{kind},#{status},#{age},#{color},#{userid});
     </insert>
 
 

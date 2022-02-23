@@ -2,6 +2,7 @@ package com.example.petshop.bean;
 
 public class PetBean {
     private int id;
+    private int userid;
     private String petname;
     private String story;
     private String status;
@@ -15,6 +16,14 @@ public class PetBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public String getPetname() {
