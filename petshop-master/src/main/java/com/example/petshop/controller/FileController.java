@@ -5,6 +5,7 @@ import com.example.petshop.service.FileService;
 import com.example.petshop.utils.Result;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,16 +107,20 @@ public class FileController extends HttpServlet {
     }
 
     String getFilePath() {
-        String classPath = "/";
-        try {
-            classPath = ResourceUtils.getURL("classpath:").getPath();
-        } catch (FileNotFoundException e) {
-        }
-        classPath += "static" + File.separator + "static" + File.separator + FILEPATH;
+        ApplicationHome ah = new ApplicationHome(FileController.class);
+        String classPath = ah.getSource().getParentFile().toString();
+//        String classPath = "/";
+//        try {
+//            classPath = ResourceUtils.getURL("classpath:").getPath();
+//        } catch (FileNotFoundException e) {
+//        }
+        classPath += File.separator + "static" + File.separator + "static" + File.separator + FILEPATH;
         File file = new File(classPath);
         if (!file.exists()) {
             file.mkdirs();
         }
+
+        System.out.println("------path" + classPath);
         return classPath;
     }
 }

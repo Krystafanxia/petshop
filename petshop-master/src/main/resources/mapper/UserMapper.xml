@@ -17,9 +17,9 @@
     <!--插入新用户信息，ID是自动生成的,返回数据库操作影响行数，为0则是失败-->
     <insert id="insertUser" parameterType="com.example.petshop.bean.UserBean">
         INSERT InTO
-            user(name,password,role)
+            user(name,password, role, firstname, lastname, age, address, city, country, email, phone, address)
         values
-            (#{name},#{password},#{role});
+            (#{name},#{password},#{role},#{firstname},#{lastname},#{age},#{address},#{city},#{country},#{email},#{phone},#{address});
     </insert>
 
     <delete id="deleteUser" parameterType="String">
@@ -30,9 +30,45 @@
     <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
     <update id="updateUser" parameterType="com.example.petshop.bean.UserBean">
         UPDATE user
-        SET password = #{password},
-            name = #{name},
-            role = #{role}
+        <set>
+            <if test = "name != null and name!=''">
+                name = #{name},
+            </if>
+            <if test = "password != null and password!=''">
+                password = #{password},
+            </if>
+            <if test = "role != null and role!=''">
+                role = #{role},
+            </if>
+            <if test = "firstname != null and firstname!=''">
+                firstname = #{firstname},
+            </if>
+            <if test = "lastname != null and lastname!=''">
+                lastname = #{lastname},
+            </if>
+            <if test = "age != null and age!=''">
+                age = #{age},
+            </if>
+            <if test = "address != null and address!=''">
+                address = #{address},
+            </if>
+            <if test = "city != null and city!=''">
+                city = #{city},
+            </if>
+            <if test = "country != null and country!=''">
+                country = #{country},
+            </if>
+            <if test = "email != null and email!=''">
+                email = #{email},
+            </if>
+            <if test = "phone != null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test = "address != null and address!=''">
+                address = #{address},
+            </if>
+        </set>
+
         WHERE id = #{id};
     </update>
 

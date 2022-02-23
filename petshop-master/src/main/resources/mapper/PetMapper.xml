@@ -21,6 +21,9 @@
 
 
     <insert id="addPet" parameterType="com.example.petshop.bean.PetBean">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
         INSERT InTO
             pet(petname,story,price,kind,status,age,color)
         values
@@ -36,28 +39,30 @@
 
     <update id="modifyPet" parameterType="com.example.petshop.bean.PetBean">
         UPDATE pet
-        SET
-        <if test = "price != null and price!=''">
-            price = #{price}
-        </if>
-        <if test = "petname != null and petname!=''">
-            and petname = #{petname}
-        </if>
-        <if test = "story != null and story!=''">
-            and story = #{story}
-        </if>
-        <if test = "kind != null and kind!=''">
-            and kind = #{kind}
-        </if>
-        <if test = "status != null and status!=''">
-            and status = #{status}
-        </if>
-        <if test = "age != null and age!=''">
-            and age = #{age}
-        </if>
-        <if test = "color != null and color!=''">
-            and color = #{color}
-        </if>
+            <set>
+                <if test = "price != null and price!=''">
+                    price = #{price},
+                </if>
+                <if test = "petname != null and petname!=''">
+                    petname = #{petname},
+                </if>
+                <if test = "story != null and story!=''">
+                    story = #{story},
+                </if>
+                <if test = "kind != null and kind!=''">
+                    kind = #{kind},
+                </if>
+                <if test = "status != null and status!=''">
+                    status = #{status},
+                </if>
+                <if test = "age != null and age!=''">
+                    age = #{age},
+                </if>
+                <if test = "color != null and color!=''">
+                    color = #{color}
+                </if>
+            </set>
+
         WHERE id = #{id};
     </update>
 

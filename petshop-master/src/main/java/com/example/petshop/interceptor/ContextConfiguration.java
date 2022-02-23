@@ -19,7 +19,10 @@ public class ContextConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/manage/**")
                 .addPathPatterns("/user/**")
-                .addPathPatterns("/upload");
+                .addPathPatterns("/upload")
+                .addPathPatterns("/upload")
+                .addPathPatterns("/getMyAccount")
+                .addPathPatterns("/payForPet");
     }
 
     @Override

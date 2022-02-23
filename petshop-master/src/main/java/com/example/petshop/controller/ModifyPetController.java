@@ -1,5 +1,6 @@
 package com.example.petshop.controller;
 
+import com.example.petshop.bean.FileBean;
 import com.example.petshop.bean.PetBean;
 import com.example.petshop.bean.PetPicBean;
 import com.example.petshop.bean.ViewBean;
@@ -44,8 +45,10 @@ public class ModifyPetController{
             for(PetBean petNew:petList) {
                 PetPicBean petpic=new PetPicBean();
                 BeanUtils.copyProperties(petNew,petpic);
-                List<String> pics=fileService.getPics(String.valueOf(petpic.getId()));
-                petpic.setPics(pics);
+                FileBean fileBean = new FileBean();
+                fileBean.setId(petNew.getId());
+                List<FileBean> files = fileService.findFile(fileBean);
+                petpic.setFiles(files);
                 petPicList.add(petpic);
             }
             return Result.success(petPicList,"success");
@@ -65,13 +68,9 @@ public class ModifyPetController{
     @ResponseBody
     public Result addUser(@RequestBody PetBean pet){
         try {
-            int flag = petService.addPet(pet);
+            petService.addPet(pet);
             Map<String,Object> map = new HashMap<String,Object>();
-            if(flag == 1){
-                return Result.success(flag,"success");
-            }else {
-                return Result.success(flag,"Fail");
-            }
+            return Result.success(pet.getId(),"success");
         }catch (Exception e){
             e.printStackTrace();
            return Result.error("fail");

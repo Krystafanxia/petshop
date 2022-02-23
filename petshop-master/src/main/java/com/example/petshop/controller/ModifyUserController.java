@@ -30,10 +30,9 @@ public class ModifyUserController extends BaseController {
      * @return
      */
     @RequestMapping("/users")
-    public String showUsers(ModelMap modelMap){
+    public Result showUsers(ModelMap modelMap){
         List<UserBean> userList = userService.queryAllUser();
-        modelMap.addAttribute("userList",userList);
-        return "users";
+        return Result.success(userList);
     }
 
     /**
@@ -44,16 +43,9 @@ public class ModifyUserController extends BaseController {
      */
     @RequestMapping("/addUser")
     @ResponseBody
-    public Map addUser(UserBean userBean){
-        int flag = userService.addUser(userBean);
-        Map<String,Object> map = new HashMap<String,Object>();
-        if(flag == 1){
-            map.put("msg","新增用户成功");
-            return map;
-        }else {
-            map.put("msg","新增用户失败");
-            return map;
-        }
+    public Result addUser(@RequestBody UserBean userBean){
+        userService.addUser(userBean);
+        return Result.success("新增用户成功");
     }
 
 
@@ -63,16 +55,10 @@ public class ModifyUserController extends BaseController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(value = "/deleteUser+{id}")
-    public String dropUser(@PathVariable("id") String id,ModelMap modelMap){
-        int flag = userService.dropUser(id);
-        List<UserBean> userList = userService.queryAllUser();
-        modelMap.addAttribute("userList",userList);
-        if(flag == 1){
-            return "users";
-        }else {
-            return "error";
-        }
+    @RequestMapping(value = "/deleteUser/{id}")
+    public Result dropUser(@PathVariable("id") String id,ModelMap modelMap){
+        userService.dropUser(id);
+        return Result.success("");
     }
 
     /**
@@ -80,11 +66,10 @@ public class ModifyUserController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping("/user+{id}")
-    public String queryUser(@PathVariable("id") String id,ModelMap modelMap){
+    @RequestMapping("/user/{id}")
+    public Result queryUser(@PathVariable("id") String id,ModelMap modelMap){
         UserBean userBean = userService.queryUserById(id);
-        modelMap.addAttribute("user",userBean);
-        return "userInfo";
+        return Result.success(userBean);
     }
 
     /**
@@ -95,16 +80,9 @@ public class ModifyUserController extends BaseController {
      */
     @RequestMapping("/modifyUser")
     @ResponseBody
-    public Map modifyUser(UserBean userBean){
-        int flag = userService.modifyUser(userBean);
-        Map<String,Object> map = new HashMap<>();
-        if(flag == 1){
-            map.put("msg","修改用户信息成功");
-            return map;
-        }else {
-            map.put("msg","修改用户信息失败");
-            return map;
-        }
+    public Result modifyUser(@RequestBody UserBean userBean){
+        userService.modifyUser(userBean);
+        return Result.success("修改用户信息成功");
     }
 
     /**

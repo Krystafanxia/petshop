@@ -3,13 +3,13 @@ package com.example.petshop.bean;
 import java.util.List;
 
 public class PetPicBean extends PetBean{
-    private List<String> pics;
+    private List<FileBean> files;
 
-    public List<String> getPics() {
-        return pics;
+    public List<FileBean> getFiles() {
+        return files;
     }
 
-    public void setPics(List<String> pics) {
-        this.pics = pics;
+    public void setFiles(List<FileBean> pics) {
+        this.files = pics;
     }
 }
