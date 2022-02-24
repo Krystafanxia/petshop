@@ -108,12 +108,17 @@ public class FileController extends HttpServlet {
 
     String getFilePath() {
         ApplicationHome ah = new ApplicationHome(FileController.class);
-        String classPath = ah.getSource().getParentFile().toString();
-//        String classPath = "/";
-//        try {
-//            classPath = ResourceUtils.getURL("classpath:").getPath();
-//        } catch (FileNotFoundException e) {
-//        }
+        String classPath;
+        try {
+            classPath = ah.getSource().getParentFile().toString();
+        } catch (Exception e) {
+            classPath = ah.getDir().getAbsolutePath();
+        }
+        // String classPath = "/";
+        // try {
+        //     classPath = ResourceUtils.getURL("classpath:").getPath();
+        // } catch (FileNotFoundException e) {
+        // }
         classPath += File.separator + "static" + File.separator + "static" + File.separator + FILEPATH;
         File file = new File(classPath);
         if (!file.exists()) {
