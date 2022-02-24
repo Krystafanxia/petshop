@@ -154,9 +154,7 @@ export default {
         await this.$refs.videos.upload(this.id);
         this.$router.back()
         SucMsg(this.id ? 'Edit pet info success!' : 'Add new pet success!')
-      } catch (e) {
-        console.log(e)
-      }
+      } catch (e) {}
       this.loading = false
     },
   }
