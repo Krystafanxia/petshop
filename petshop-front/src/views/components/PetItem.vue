@@ -6,7 +6,7 @@
     <md-card-header v-if="detail">
       <div class="md-field">BREED_NAME: {{ detail.petname }}</div>
       <div class="md-field">AGE: breed {{ detail.age }}</div>
-      <div class="md-field">PRICE: {{ detail.price }} RMB</div>
+      <div class="md-field">PRICE: £ {{ detail.price }}</div>
       <div class="md-field more-action" @click="getDetail">More</div>
     </md-card-header>
   </md-card>

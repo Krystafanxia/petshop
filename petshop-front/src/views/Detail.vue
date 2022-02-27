@@ -23,7 +23,7 @@
                 <div class="md-field">AGE: {{ detail.age }}</div>
                 <div class="md-field">COLOR: {{ detail.color }}</div>
               </div>
-              <div class="md-layout-item md-size-20" style="min-width: 170px; white-space: nowrap">price: <font color="red" size="6">¥ {{ detail.price }}</font></div>
+              <div class="md-layout-item md-size-20" style="min-width: 170px; white-space: nowrap">price: <font color="red" size="6">£ {{ detail.price }}</font></div>
             </div>
             <div class="detail-change-number">
               <font>quantity：</font><number-picker :min="0" :value="count" @increase="increaseToCart"  @reduce="reduceFromCart" />

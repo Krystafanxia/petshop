@@ -24,7 +24,7 @@
 
 
     <select id="findFile" resultType="com.example.petshop.bean.FileBean">
-        SELECT * FROM file
+        SELECT id,fileid,filename,filetype FROM file
         <where>
             <if test = "id != null and id!=''">
                 id = #{id}
