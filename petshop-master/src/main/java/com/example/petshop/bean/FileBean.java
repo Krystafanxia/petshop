@@ -6,6 +6,16 @@ public class FileBean {
     private String fileid;
     private String filename;
     private String filetype;
+
+    private byte[] content;
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
     public int getId() {
         return id;
     }

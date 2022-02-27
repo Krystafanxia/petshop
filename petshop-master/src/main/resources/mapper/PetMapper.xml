@@ -25,9 +25,9 @@
             select LAST_INSERT_ID()
         </selectKey>
         INSERT InTO
-            pet(petname,story,price,kind,status,age,color,userid)
+            pet(petname,story,price,kind,status,age,color,userid, title)
         values
-            (#{petname},#{story},#{price},#{kind},#{status},#{age},#{color},#{userid});
+            (#{petname},#{story},#{price},#{kind},#{status},#{age},#{color},#{userid},#{title});
     </insert>
 
 
@@ -59,7 +59,10 @@
                     age = #{age},
                 </if>
                 <if test = "color != null and color!=''">
-                    color = #{color}
+                    color = #{color},
+                </if>
+                <if test = "title != null and title!=''">
+                    title = #{title}
                 </if>
             </set>
 

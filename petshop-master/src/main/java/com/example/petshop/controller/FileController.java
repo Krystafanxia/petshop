@@ -46,16 +46,13 @@ public class FileController extends HttpServlet {
         }
         try{
             String fileName= UUID.randomUUID() + file.getOriginalFilename();
-            String destFileName = getFilePath() + File.separator + fileName;
-            File destFile=new File(destFileName);
-            file.transferTo(destFile);
-            //insert vedio into database
             FileBean attachment=new FileBean();
             attachment.setId(Integer.parseInt(id));
             attachment.setFilename(fileName);
             attachment.setFiletype(type);
+            attachment.setContent(file.getBytes());
             fileService.insertFile(attachment);
-            return Result.success(destFileName,"success");
+            return Result.success(fileName,"success");
         } catch (IOException e) {
             e.printStackTrace();
             return Result.error("upload fail");
@@ -66,16 +63,14 @@ public class FileController extends HttpServlet {
     public Result download (HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException {
         request.setCharacterEncoding("UTF-8");
         String fileName=request.getParameter("fileName");
-        String path = getFilePath() + File.separator +  fileName;
-        File file=new File(path);
-        FileInputStream in=new FileInputStream(file);
+        FileBean fileBean = new FileBean();
+        fileBean.setFilename(fileName);
+        FileBean file = fileService.getFile(fileBean);
         String type=request.getServletContext().getMimeType(fileName);
         response.setHeader("Content-type",type);
         response.setHeader("Content-Disposition","attachment;filename="+(URLEncoder.encode(fileName,"utf-8")));
-        ServletOutputStream out=response.getOutputStream();
-        IOUtils.copy(in,out);
-        if(in!=null){
-            in.close();
+        if (file != null) {
+            response.getOutputStream().write(file.getContent());
         }
         return Result.success(fileName,"success");
     }
@@ -119,6 +114,8 @@ public class FileController extends HttpServlet {
         //     classPath = ResourceUtils.getURL("classpath:").getPath();
         // } catch (FileNotFoundException e) {
         // }
+
+        // classPath = "D:\\";
         classPath += File.separator + "static" + File.separator + "static" + File.separator + FILEPATH;
         File file = new File(classPath);
         if (!file.exists()) {

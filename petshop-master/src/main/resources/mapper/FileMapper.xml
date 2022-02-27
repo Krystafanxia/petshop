@@ -4,7 +4,17 @@
 
     <select id="getFile" resultType="com.example.petshop.bean.FileBean">
         SELECT * FROM file
-        WHERE fileid = #{fileid};
+        <where>
+            <if test = "id != null and id!=''">
+                id = #{id}
+            </if>
+            <if test = "filetype != null and filetype!=''">
+                and filetype = #{filetype}
+            </if>
+            <if test = "filename != null and filename!=''">
+                and filename = #{filename}
+            </if>
+        </where>
     </select>
 
     <select id="getPics" resultType="String">
@@ -27,9 +37,9 @@
 
     <insert id="insertFile" parameterType="com.example.petshop.bean.FileBean">
         INSERT InTO
-            file(id,fileid,filename,filetype)
+            file(id,fileid,filename,filetype, content)
         values
-            (#{id},#{fileid},#{filename},#{filetype});
+            (#{id},#{fileid},#{filename},#{filetype}, #{content});
     </insert>
 
     <delete id="deleteFile" parameterType="com.example.petshop.bean.FileBean">

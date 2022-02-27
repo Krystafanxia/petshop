@@ -10,6 +10,16 @@ public class PetBean {
     private String kind;
     private int age;
     private String color;
+
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
     public int getId() {
         return id;
     }

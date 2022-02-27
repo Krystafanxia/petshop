@@ -8,6 +8,14 @@
       <md-card-content v-loading="loading">
         <el-form ref="form" :model="detail" :rules="rules" class="md-layout">
           <div class="md-layout-item md-small-size-100 md-size-33">
+            <el-form-item prop="title">
+              <md-field>
+                <label>Features</label>
+                <md-input v-model="detail.title" @change="validField('title')" />
+              </md-field>
+            </el-form-item>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-33">
             <el-form-item prop="petname">
               <md-field>
                 <label>Pet Name</label>
@@ -100,6 +108,7 @@ export default {
         status: defaultKey(Const.SALE_TYPE)
       },
       rules: {
+        title: [{ required: true, message: 'please input features!', trigger: ['change', 'blur']}],
         petname: [{ required: true, message: 'please input name!', trigger: ['change', 'blur']}],
         story: [{ required: true, message: 'please input story!', trigger: ['change', 'blur']}],
         price: [{ required: true, message: 'please input price!', trigger: ['change', 'blur']}]

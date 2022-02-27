@@ -15,7 +15,7 @@
           </div>
           <div class="md-layout-item">
             <div class="md-headline">
-              Purebred golden retriever puppies
+              {{ detail.title || petType(detail.kind) }}
             </div>
             <div class="detail-info md-layout md-gutter md-alignment-center-center">
               <div class="md-layout-item">
@@ -172,6 +172,9 @@ export default {
     },
     reduceFromCart() {
       this.delFromCart(this.detail.id)
+    },
+    petType(key) {
+      return Const.PET_TYPE[key] || ''
     }
   },
 };
