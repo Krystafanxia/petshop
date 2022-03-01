@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="main main-raised">
-      <nav-tabs-card no-label class="simple-tab">
+      <nav-tabs-card v-loading="loading" no-label class="simple-tab">
         <template slot="content">
           <md-tabs class="md-primary" md-card md-alignment="left">
             <md-tab md-label="Check Out">
@@ -14,7 +14,7 @@
                   <md-table-row slot="md-table-row" md-selectable="multiple" slot-scope="{ item }">
                     <md-table-cell md-label="Product Name" class="avatar pet-table-cell-header">
                       <number-picker :min="0" :value="item.count" @increase="() => increaseToCart(item.id)"  @reduce="() => reduceFromCart(item.id)" />
-                      <img :src="item.pic || '/static/img/dog.jpeg'" alt="">
+                      <scale-img :detail="item" :default-img="'/static/img/dog.jpeg'" :size="100" />
                       {{ item.petname }}
                     </md-table-cell>
                     <md-table-cell md-label="Delivery">{{ item.delivery }}</md-table-cell>
@@ -55,7 +55,7 @@
                     <!--div class="md-field">State/Province/Region: London</div!-->
                     <!--div class="md-field">Post Code: E2Q 2QD</div!-->
 
-                    <md-button class="dark-btn" @click="doPay">Pay</md-button>
+                    <md-button class="dark-btn" @click="isShowPayConfirm = true">Pay</md-button>
                   </div>
                   <div class="md-layout-item">
                     <div class="md-headline">Payment Details</div>
@@ -71,8 +71,11 @@
           </transition>
         </template>
       </nav-tabs-card>
-
     </div>
+
+    <md-dialog-confirm :md-active.sync="isShowPayConfirm" md-title="Sure pay ?"
+                       md-content="<font color=red>We strongly recommend that you hold a video conference with the seller via <a target='_blank' href='https://www.microsoft.com/en-us/microsoft-teams'><strong>TEAMS</strong></a> prior to purchasing.</font>"
+                       md-confirm-text="Confirm" class="confirm-del-friend" @md-confirm="doPay" />
   </div>
 </template>
 
@@ -83,15 +86,18 @@ import {getMyAccount, payForPet} from "@/api/pay";
 import {SucMsg} from "@/utils/message";
 import {queryPets} from "@/api/pet";
 import NumberPicker from "@/components/NumberPicker";
+import ScaleImg from "@/views/components/ScaleImg";
 
 export default {
-  components: { NavTabsCard, NumberPicker },
+  components: { NavTabsCard, NumberPicker, ScaleImg },
   name: "index",
   bodyClass: "index-page",
   data() {
     return {
       myAccountInfo: {},
+      loading: false,
       isShowPay: false,
+      isShowPayConfirm: false,
       cache: {},
       selected: [],
       ...mapActions({ addPetToCart: 'cart/addPetToCart', delFromCart: 'cart/delFromCart', cleanFromCart: 'cart/cleanFromCart' })
@@ -128,7 +134,7 @@ export default {
       this.$router.push({ path: '/search' })
     },
     hidePay() {
-      this.isShowPay = false
+      this.isShowPayConfirm = this.isShowPay = false
     },
     choose(list) {
       this.selected = list

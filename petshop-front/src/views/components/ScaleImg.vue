@@ -1,5 +1,5 @@
 <template>
-  <div class="short-img" :style="`background-image: url(${shortImg}); height: ${height}px;`" @click="onClick">
+  <div class="short-img" :style="style" @click="onClick">
     <video-player v-if="showVideo" class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" />
   </div>
 </template>
@@ -13,6 +13,7 @@ export default {
   components: {videoPlayer},
   props: {
     canPlay: Boolean,
+    size: Number,
     rate: {
       type: Number,
       default: 1.36
@@ -30,10 +31,14 @@ export default {
   data() {
     return {
       playerOptions: null,
+      width: '100%',
       height: 100
     }
   },
   computed: {
+    style() {
+      return `background-image: url(${this.shortImg}); height: ${this.computedSize(this.height)}; width: ${this.computedSize(this.width)};`
+    },
     fileName() {
       return this.url || (this.file || {}).filename || (((this.detail || {}).files || []).find(item => item.filetype === Const.FILE_TYPE.IMG) || {}).filename
     },
@@ -73,13 +78,19 @@ export default {
   },
   methods: {
     refreshSize() {
-      if (this.$el && this.$el.getBoundingClientRect) {
+      if (this.size) {
+        this.width = this.size
+        this.height = this.size / this.rate
+      } else if (this.$el && this.$el.getBoundingClientRect) {
         const { width } = this.$el.getBoundingClientRect()
         this.height = width / this.rate
       }
     },
     onClick() {
       this.$emit('choose', { url: this.shortImg, detail: this.detail, file: this.file })
+    },
+    computedSize(val) {
+      return ((val || '') + '').indexOf('%') > 0 ? val : `${val}px`
     }
   }
 }
